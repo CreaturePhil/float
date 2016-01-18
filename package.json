@@ -1,11 +1,12 @@
 {
   "name": "float",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A library for creating user interfaces.",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
   },
+  "repository": "CreaturePhil/float",
   "keywords": [
     "float",
     "user interfaces",
@@ -14,6 +15,13 @@
   ],
   "author": "Philip La <birkal@outlook.com>",
   "license": "MIT",
+  "engines": {
+    "node": "> 4.0.0"
+  },
+  "files": [
+    "src/index.js",
+    "src/tags.js",
+  ],
   "dependencies": {
     "htmlparser2": "^3.9.0"
   },

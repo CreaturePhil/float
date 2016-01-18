@@ -19,6 +19,10 @@ function getElements() {
   return elements;
 }
 
+function extendElements(newElements) {
+  elements = elements.concat([newElements]);
+}
+
 function renderUnknownElement(children, dom) {
   if (dom.type === 'tag' && tags.indexOf(dom.name) >= 0) {
     return '<' + dom.data + '>' + children + '</' + dom.name + '>';
@@ -51,4 +55,4 @@ function renderElement(html) {
   return handler.dom.map(d => renderElements(d)).join('');
 }
 
-module.exports = { createElement, getElements, renderElement };
+module.exports = { createElement, extendElements, getElements, renderElement };
