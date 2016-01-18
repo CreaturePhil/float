@@ -1,5 +1,5 @@
 {
-  "name": "float",
+  "name": "float-ui",
   "version": "1.0.0",
   "description": "A library for creating user interfaces.",
   "main": "index.js",
