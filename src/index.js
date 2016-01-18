@@ -36,6 +36,7 @@ function renderBaseElement(dom, children) {
 }
 
 function renderElements(dom) {
+  if (dom.type === 'text') return renderBaseElement(dom, dom.data);
   if (!dom.children) return renderBaseElement(dom, '');
   const children = dom.children.filter(e => e.type === 'tag');
   if (!children.length) {

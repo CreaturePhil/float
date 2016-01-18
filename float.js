@@ -42,13 +42,18 @@ function renderUnknownElement(children, dom) {
 
 function renderElement(html) {
   parser.parseComplete(html);
+//  console.log(require('util').inspect(handler.dom, false, null));
   return handler.dom.map(d => renderElements(d)).join('');
 }
 
 function renderElements(dom) {
+  console.log('\n@', require('util').inspect(dom, false, null));
+  if (dom.type === 'text') return renderBaseElement(dom, dom.data);
   if (!dom.children) return renderBaseElement(dom, '');
+  if (dom.raw === 'fuck') console.log('@', require('util').inspect(dom, false, null));
   const children = dom.children.filter(e => e.type === 'tag');
   if (!children.length) {
+//    console.log('!!!!', dom.children);
     return renderBaseElement(dom, dom.children[0].data);
   }
   const childrens = dom.children.map(e => renderElements(e)).join('');
@@ -56,7 +61,7 @@ function renderElements(dom) {
 }
 
 const d = handler.dom[0];
-console.log(renderElement("<h1><AwesomeButton name='yo'><h1>hi</h1><h1>hi</h1></AwesomeButton><AwesomeButton name='yo'><h1>hi</h1><h1>hi</h1></AwesomeButton></h1>"));
-console.log(renderElement("<h1></h1>"));
-console.log(renderElement("<AwesomeButton></AwesomeButton>"));
+//console.log(renderElement("<h1><AwesomeButton name='yo'><h1>hi</h1><h1>hi</h1></AwesomeButton><AwesomeButton name='yo'><h1>hi</h1><h1>hi</h1></AwesomeButton></h1>"));
+console.log(renderElement("<h1>fuck<h1>hi</h1></h1>"));
+//console.log(renderElement("<AwesomeButton></AwesomeButton>"));
 //console.log(renderBaseElement(d.name, d.attribs, d.children[0].data));
