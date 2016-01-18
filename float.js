@@ -17,11 +17,6 @@ function getElements() {
   return elements;
 }
 
-createElement('h1', {
-  render: function() {
-    return "<h1>" + this.children + "</h1>";
-  }
-});
 
 createElement('AwesomeButton', {
   render: function() {
@@ -29,12 +24,20 @@ createElement('AwesomeButton', {
   }
 });
 
-function renderBaseElement(name, props, children) {
-  if (!elements.hasOwnProperty(name)) return children;
-  return elements[name].render.call({
+function renderBaseElement(dom, children) {
+  if (!elements.hasOwnProperty(dom.name)) return renderUnknownElement(children, dom);
+  const element = elements[dom.name];
+  return element.render.call({
     children: children,
-    props: props
+    props: dom.attribs || (element.getDefaultProps && element.getDefaultProps()) || {}
   });
+}
+
+function renderUnknownElement(children, dom) {
+  if (dom.type === 'tag' && ['h1', 'h2', 'h3'].indexOf(dom.name) >= 0) {
+    return '<' + dom.data + '>' + children + '</' + dom.name + '>';
+  }
+  return children;
 }
 
 function renderElement(html) {
@@ -43,15 +46,17 @@ function renderElement(html) {
 }
 
 function renderElements(dom) {
-  if (!dom.children) return renderBaseElement(dom);
+  if (!dom.children) return renderBaseElement(dom, '');
   const children = dom.children.filter(e => e.type === 'tag');
   if (!children.length) {
-    return renderBaseElement(dom.name, dom.attribs, dom.children[0].data);
+    return renderBaseElement(dom, dom.children[0].data);
   }
   const childrens = dom.children.map(e => renderElements(e)).join('');
-  return renderBaseElement(dom.name, dom.attribs, childrens);
+  return renderBaseElement(dom, childrens);
 }
 
 const d = handler.dom[0];
-console.log(renderElement("<AwesomeButton name='yo'><h1>hi</h1><h1>hi</h1></AwesomeButton><AwesomeButton name='yo'><h1>hi</h1><h1>hi</h1></AwesomeButton>"));
+console.log(renderElement("<h1><AwesomeButton name='yo'><h1>hi</h1><h1>hi</h1></AwesomeButton><AwesomeButton name='yo'><h1>hi</h1><h1>hi</h1></AwesomeButton></h1>"));
+console.log(renderElement("<h1></h1>"));
+console.log(renderElement("<AwesomeButton></AwesomeButton>"));
 //console.log(renderBaseElement(d.name, d.attribs, d.children[0].data));

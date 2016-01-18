@@ -1,6 +1,7 @@
 'use strict';
 
 const htmlparser = require('htmlparser');
+const tags = require('./tags');
 
 const handler = new htmlparser.DefaultHandler((err) => {
   if (err) throw new Error(err);
@@ -18,28 +19,35 @@ function getElements() {
   return elements;
 }
 
-function renderBaseElement(name, props, children) {
-  if (!elements.hasOwnProperty(name)) return children;
-  const elment = elements[name];
+function renderUnknownElement(children, dom) {
+  if (dom.type === 'tag' && tags.indexOf(dom.name) >= 0) {
+    return '<' + dom.data + '>' + children + '</' + dom.name + '>';
+  }
+  return children;
+}
+
+function renderBaseElement(dom, children) {
+  if (!elements.hasOwnProperty(dom.name)) return renderUnknownElement(children, dom);
+  const element = elements[dom.name];
   return element.render.call({
     children: children,
-    props: props || (element.getDefaultProps && element.getDefaultProps())
+    props: dom.attribs || (element.getDefaultProps && element.getDefaultProps()) || {}
   });
+}
+
+function renderElements(dom) {
+  if (!dom.children) return renderBaseElement(dom, '');
+  const children = dom.children.filter(e => e.type === 'tag');
+  if (!children.length) {
+    return renderBaseElement(dom, dom.children[0].data);
+  }
+  const childrens = dom.children.map(e => renderElements(e)).join('');
+  return renderBaseElement(dom, childrens);
 }
 
 function renderElement(html) {
   parser.parseComplete(html);
   return handler.dom.map(d => renderElements(d)).join('');
-}
-
-function renderElements(dom) {
-  if (!dom.children) return renderBaseElement(dom);
-  const children = dom.children.filter(e => e.type === 'tag');
-  if (!children.length) {
-    return renderBaseElement(dom.name, dom.attribs, dom.children[0].data);
-  }
-  const childrens = dom.children.map(e => renderElements(e)).join('');
-  return renderBaseElement(dom.name, dom.attribs, childrens);
 }
 
 module.exports = { createElement, getElements, renderElement };
