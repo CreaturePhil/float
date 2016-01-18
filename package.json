@@ -1,14 +1,19 @@
 {
   "name": "float",
-  "version": "0.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "A library for creating user interfaces.",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "float",
+    "user interfaces",
+    "components",
+    "render"
+  ],
+  "author": "Philip La <birkal@outlook.com>",
+  "license": "MIT",
   "dependencies": {
     "htmlparser2": "^3.9.0"
   },
