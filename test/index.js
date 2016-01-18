@@ -84,3 +84,25 @@ describe('Rendering custom elements', () => {
     );
   });
 });
+
+describe('Rendering custom elements within custom elements', () => {
+  it('should create custom button element inside heading element', () => {
+    Float.createElement('SuperHeader', {
+      getDefaultProps: function() {
+        return {color: 'red'};
+      },
+
+      render: function() {
+        return `<h1 style='color: ${this.props.color}'>${this.children}<AwesomeButton name="hi">Hi</AwesomeButton></h1>`;
+      }
+    });
+    assert.deepEqual(Float.getElements().hasOwnProperty('SuperHeader'), true);
+  });
+
+  it('should render custom button element inside heading element', () => {
+    assert.deepEqual(
+      Float.renderElement('<SuperHeader color="green">My name is something.</SuperHeader>'),
+      '<h1 style=\'color: green\'>My name is something.<button name=\'hi\'>Hi</button></h1>'
+    );
+  });
+});

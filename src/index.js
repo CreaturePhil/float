@@ -33,10 +33,11 @@ function renderUnknownElement(children, dom) {
 function renderBaseElement(dom, children) {
   if (!elements.hasOwnProperty(dom.name)) return renderUnknownElement(children, dom);
   const element = elements[dom.name];
-  return element.render.call({
+  const renderHtml =  element.render.call({
     children: children,
     props: dom.attribs || (element.getDefaultProps && element.getDefaultProps()) || {}
   });
+  return renderElement(renderHtml);
 }
 
 function renderElements(dom) {
