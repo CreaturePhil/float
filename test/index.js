@@ -29,7 +29,7 @@ describe('Creating custom elements', () => {
   it('should create custom button element', () => {
     Float.createElement('AwesomeButton', {
       render: function() {
-        return `<button name='${this.props.name}'>${this.children}</button>`
+        return `<button name='${this.props.name}'>${this.children}</button>`;
       }
     });
     assert.deepEqual(Float.getElements().hasOwnProperty('AwesomeButton'), true);
