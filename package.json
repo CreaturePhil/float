@@ -24,7 +24,7 @@
     "src/tags.js"
   ],
   "dependencies": {
-    "htmlparser2": "^3.9.0"
+    "htmlparser": "^1.7.7"
   },
   "devDependencies": {
     "gulp": "^3.9.0",
