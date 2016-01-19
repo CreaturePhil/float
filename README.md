@@ -61,7 +61,7 @@ Add elements to the current Float instance from other Float instances.
 
 Parameters:
 
-- ``elements``: _Array_
+- ``elements``: _Object_
 
 Returns: _undefined_
 
@@ -72,15 +72,15 @@ const Float = require('float-ui');
 const Float_PS = require('float-ps');
 
 console.log(Float.getElements());
-// => {}
+// => {HelloButton: {render: function() {...}}}
 
 console.log(FLOAT_PS);
-// => [{break: {render: function() {...}}, CommandButton: {render: function() {...}}]
+// => {break: {render: function() {...}}, CommandButton: {render: function() {...}}
 
 Float.extendElements(FLOAT_PS);
 
 console.log(Float.getElements());
-// => {break: render: function() {...}, CommandButton: {render: function() {...}}}
+// => {HelloButton: {render: function() {...}}, break: render: function() {...}, CommandButton: {render: function() {...}}}
 ```
 
 ### getElements()
