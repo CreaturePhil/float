@@ -20,7 +20,11 @@ function getElements() {
 }
 
 function extendElements(newElements) {
-  elements = elements.concat([newElements]);
+  const keys = Object.keys(newElements);
+  let length = newElements.length;
+  while (length--) {
+    elements[keys[length]] = newElements[length];
+  }
 }
 
 function renderUnknownElement(children, dom) {
