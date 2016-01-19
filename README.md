@@ -22,3 +22,7 @@ Float.createElement('HelloButton', {
 console.log(Float.renderElement('<HelloButton name="Phil" />'));
 // => <button>Hello Phil</button>
 ```
+
+# LICENSE
+
+[MIT](LICENSE)
