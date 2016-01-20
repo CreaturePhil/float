@@ -21,9 +21,11 @@ function getElements() {
 
 function extendElements(newElements) {
   const keys = Object.keys(newElements);
-  let length = newElements.length;
+  let length = keys.length;
+  let name = "";
   while (length--) {
-    elements[keys[length]] = newElements[length];
+    name = keys[length];
+    elements[name] = newElements[name];
   }
 }
 

@@ -106,3 +106,13 @@ describe('Rendering custom elements within custom elements', () => {
     );
   });
 });
+
+describe('Extending elements', () => {
+  it('should extends elements', () => {
+    assert.deepEqual(Object.keys(Float.getElements()).length, 3);
+    const noop = function(){};
+    const newElements = {Foo: {render: noop}, Bar: {render: noop}, Baz: {render: noop}};
+    Float.extendElements(newElements);
+    assert.deepEqual(Object.keys(Float.getElements()).length, 6);
+  });
+});
